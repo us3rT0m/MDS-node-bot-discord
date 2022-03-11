@@ -12,16 +12,8 @@ const client = new Client({ intents: [
 	Intents.FLAGS.GUILD_MESSAGES,
 ] });
 
-const deployCommands = require('./deploy-commands');
-
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
-	console.log(client.guilds.cache.map((guild: any) => guild.id));
-
-	client.guilds.cache.map((guild: any) => guild.id).map((guildId: any)=>{
-		deployCommands(guildId);
-	});
-
 	console.log(`Ready! Logged in as ${client.user.tag}`);
 });
 
