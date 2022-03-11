@@ -68,20 +68,6 @@ client.on('messageCreate', async (message: any) => {
 	
 });
 
-function getUserFromMention(mention: any) {
-	if (!mention) return;
-
-	if (mention.startsWith('<@') && mention.endsWith('>')) {
-		mention = mention.slice(2, -1);
-
-		if (mention.startsWith('!')) {
-			mention = mention.slice(1);
-		}
-
-		return client.users.cache.get(mention);
-	}
-}
-
 // Login to Discord with your client's token
 client.login(token);
 
