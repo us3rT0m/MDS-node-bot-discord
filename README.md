@@ -115,7 +115,8 @@ npm run start
 
 * Tom Ait-ouarab ( `Benevolent Dictators for Life` )
 
-See the [contributor](https://github.com/us3rT0m/MDS-bot-node/graphs/contributors)
+See the [contributor](https://github.com/us3rT0m/MDS-node-bot-discord/graphs/contributors)
+
 
 <br/>
 
