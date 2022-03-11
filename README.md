@@ -75,12 +75,12 @@ npm i
 
 `Windows users`
 ```batch
-type nul > config.json
+type nul > .env
 ```
 
 `Linux | mac users`
 ```bash
-touch config.json
+touch .env
 ```
 
 ## Step-5
@@ -88,10 +88,8 @@ touch config.json
 ### edit config.json
 
 ```json
-{
-    "clientId": "YourBotId",
-    "token": "YourBotToken"
-}
+clientId=yourClientId
+token=yourToken
 ```
 [How to get your clientId](https://discordjs.guide/preparations/adding-your-bot-to-servers.html#creating-and-using-your-invite-link)
 
