@@ -51,7 +51,8 @@ client.on('guildUpdate', async (oldGuild: any, newGuild: any) => {
 });
 
 client.on('messageCreate', async (message: any) => {
-	if(message.author ==- client.user) return;
+	// Ignore if author is bot
+	if(message.author.bot) return;
 	if(message.content.toLowerCase()==='hello'){
 		message.reply("Hey! What's Up?");
 	}
@@ -59,18 +60,27 @@ client.on('messageCreate', async (message: any) => {
 		message.reply("Are you talking about me ?")
 	}
 	if(message.content.length > 3 && message.content === message.content.toUpperCase()){
-		message.reply("**WE ARE NOT DEAF**")
+		message.reply(`${message.author} **WE ARE NOT DEAF**`)
 	}
+	if(message.content.includes(client.user.id)){
+		message.reply(`Huh.. Pls don't talk behind my back. Use '/' commands if you want to interact with me!`)
+	}
+	
 });
 
-// client.on('message', async (message: any) => {
-// 	if (!message.content.startsWith('!') || message.author.bot) return;
+function getUserFromMention(mention: any) {
+	if (!mention) return;
 
-// 	console.log(message.content);
+	if (mention.startsWith('<@') && mention.endsWith('>')) {
+		mention = mention.slice(2, -1);
 
-// 	// const args = message.content.slice(prefix.length).trim().split(/ +/);
-// 	// const command = args.shift().toLowerCase();
-// });
+		if (mention.startsWith('!')) {
+			mention = mention.slice(1);
+		}
+
+		return client.users.cache.get(mention);
+	}
+}
 
 // Login to Discord with your client's token
 client.login(token);
