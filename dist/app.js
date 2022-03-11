@@ -15,10 +15,13 @@ const fs = require('node:fs');
 const { Client, Collection, Intents } = require('discord.js');
 const { token } = require('../config.json');
 // Create a new client instance
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_MESSAGES,
+    ] });
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
-    console.log('Ready!');
+    console.log(`Ready! Logged in as ${client.user.tag}`);
 });
 client.commands = new Collection();
 const commandFiles = fs.readdirSync('./dist/commands').filter((file) => file.endsWith('.js'));
@@ -44,9 +47,30 @@ client.on('interactionCreate', (interaction) => __awaiter(void 0, void 0, void 0
         yield interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
     }
 }));
-client.on('message', (interaction) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(interaction);
-    console.log(interaction.isMention());
+client.on('guildUpdate', (oldGuild, newGuild) => __awaiter(void 0, void 0, void 0, function* () {
+    if (oldGuild.name != newGuild.name) {
+        client.channels.cache.get('951394992088309783').send(`Server name : ${oldGuild.name} changed to ${newGuild.name}`);
+    }
+    // console.log('server updated');
 }));
+client.on('messageCreate', (message) => __awaiter(void 0, void 0, void 0, function* () {
+    if (message.author == -client.user)
+        return;
+    if (message.content.toLowerCase() === 'hello') {
+        message.reply("Hey! What's Up?");
+    }
+    if (message.content.toLowerCase().includes('bot')) {
+        message.reply("Are you talking about me ?");
+    }
+    if (message.content.length > 3 && message.content === message.content.toUpperCase()) {
+        message.reply("**WE ARE NOT DEAF**");
+    }
+}));
+// client.on('message', async (message: any) => {
+// 	if (!message.content.startsWith('!') || message.author.bot) return;
+// 	console.log(message.content);
+// 	// const args = message.content.slice(prefix.length).trim().split(/ +/);
+// 	// const command = args.shift().toLowerCase();
+// });
 // Login to Discord with your client's token
 client.login(token);
